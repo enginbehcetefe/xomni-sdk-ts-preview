@@ -1,7 +1,7 @@
 ﻿/// <chutzpah_reference path="../../src/client-counters.ts" />
 /// <chutzpah_reference path="../../definitions/jasmine/jasmine.d.ts" />
 /// <chutzpah_reference path="../../definitions/jquery/jquery.d.ts" />
-/// <chutzpah_reference path="../testhelpers.ts" />
+/// <chutzpah_reference path="../test-helpers.ts" />
 
 TestHelpers.InitalizeTestContext();
 
@@ -20,28 +20,21 @@ describe('ClientCounterClient.getClientCounterList', () => {
     });
 
     it("Should use correct http headers", () => {
-        TestHelpers.RequestHttpHeadersTest($, {
-            "Authorization": "Basic " + btoa("u:p"),
-            "Accept": "application/vnd.xomni.api-v3_0, */*"
-        });
+        TestHelpers.RequestHttpHeadersTest($);
 
         var testClient = new Xomni.Private.Analytics.ClientCounters.ClientCounterClient();
         testClient.getClientCounterList(suc => { }, err => { });
     });
 
     it("Should parse response successfully", () => {
-        spyOn($, "ajax")
-            .and
-            .callFake(p => {
-                p.success({
+        TestHelpers.ResponseParseTest($, {
                     "ContinuationToken": "adqweqwlkasd12312dkslk",
                     "CounterNames": [
                         "categoryClicked",
                         "itemClicked",
                         "brandClicked"
                     ]
-                }, null, null);
-            });
+                });
         
         var expectedSuccess = (counters: Xomni.Private.Analytics.ClientCounters.ClientCounterListContainer) => {
             expect(counters.ContinuationToken).toEqual("adqweqwlkasd12312dkslk");
