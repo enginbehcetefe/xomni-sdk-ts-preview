@@ -59,6 +59,7 @@
     <TypeScriptCompile Include="src\client-side-analytics-summary.ts" />
     <TypeScriptCompile Include="src\core.ts" />
     <None Include="test\chutzpah.json" />
+    <TypeScriptCompile Include="test\fixtures\client-side-analytics-summary-fixture.ts" />
     <TypeScriptCompile Include="test\fixtures\core-fixture.ts" />
     <TypeScriptCompile Include="test\test-helpers.ts" />
   </ItemGroup>
