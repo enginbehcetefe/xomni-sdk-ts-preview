@@ -73,5 +73,31 @@ describe('StoreClient.get', () => {
     });
 });
 
+describe('StoreClient.delete', () => {
+    it("Should hit correct url", () => {
+        TestHelpers.RequestUriTest($, validUri);
+        var testClient = new Xomni.Management.Configuration.Store.StoreClient();
+        testClient.delete(validStoreId, suc => { }, err => { });
+    });
 
+    it("Should use correct http method", () => {
+        TestHelpers.RequestHttpMethodTest($, "Delete");
+        var testClient = new Xomni.Management.Configuration.Store.StoreClient();
+        testClient.delete(validStoreId, suc => { }, err => { });
+    });
+
+    it("Should use correct http headers", () => {
+        TestHelpers.RequestHttpHeadersTest($);
+        var testClient = new Xomni.Management.Configuration.Store.StoreClient();
+        testClient.delete(validStoreId, suc => { }, err => { });
+    });
+
+    it("Should raise exception with invalid parameters", () => {
+        var testClient = new Xomni.Management.Configuration.Store.StoreClient();
+
+        expect(() => { testClient.delete(-1, suc => { }, err => { }) })
+            .toThrow(new Error("storeId could not be less than 0."));
+    });
+
+});
 

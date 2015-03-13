@@ -3,11 +3,18 @@
 module Xomni.Management.Configuration.Store {
     export class StoreClient extends BaseClient {
         private fetchingStoreUri: string = "/management/configuration/store/{storeId}";
+        private deletingStoreUri: string = "/management/configuration/store/{storeId}";
 
         get(storeId: number, success: (result: Models.Management.Configuration.Store[]) => void, error: (error: any) => void) {
             this.ValidateParameter(storeId);
             var uri = this.PrepareUri(this.fetchingStoreUri, storeId);
             this.httpProvider.get(uri, success, error);
+        }
+
+        delete(storeId: number, success: (result: Models.Management.Configuration.Store[]) => void, error: (error: any) => void) {
+            this.ValidateParameter(storeId);
+            var uri = this.PrepareUri(this.deletingStoreUri, storeId);
+            this.httpProvider.delete(uri, success, error);
         }
 
         private ValidateParameter(storeId: number) {
