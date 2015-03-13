@@ -279,3 +279,74 @@ describe('StoreClient.Post', () => {
     });
 });
 
+describe('StoreClient.Put', () => {
+    it("Should hit correct url", () => {
+        TestHelpers.RequestUriTest($, "/management/configuration/store");
+        var testClient = new Xomni.Management.Configuration.Store.StoreClient();
+        testClient.put(suc => { }, err => { });
+    });
+
+    it("Should use correct http method", () => {
+        TestHelpers.RequestHttpMethodTest($, "Put");
+        var testClient = new Xomni.Management.Configuration.Store.StoreClient();
+        testClient.put(suc => { }, err => { });
+
+    });
+
+    it("Should use correct http headers", () => {
+        TestHelpers.RequestHttpHeadersTest($);
+        var testClient = new Xomni.Management.Configuration.Store.StoreClient();
+        testClient.put(suc => { }, err => { });
+    });
+
+    it("Should parse response successfully", () => {
+        TestHelpers.ResponseParseTest($,
+            [
+                {
+                    "Id": 84,
+                    "Name": "Relationed Store",
+                    "Description": "The Description",
+                    "Address": "Sample Data Address",
+                    "Location": {
+                        "Longitude": 23.54,
+                        "Latitude": 35.41
+                    },
+                    "Licenses": [
+                    ]
+                }
+            ]);
+
+        var expectedSuccess = (post: Models.Management.Configuration.Store[]) => {
+            expect(post.length).toEqual(1);
+            expect(post[0].Id).toEqual(84);
+            expect(post[0].Name).toEqual("Relationed Store");
+            expect(post[0].Description).toEqual("The Description");
+            expect(post[0].Address).toEqual("Sample Data Address");
+            expect(post[0].Location.Longitude).toEqual(23.54);
+            expect(post[0].Location.Latitude).toEqual(35.41);
+            expect(post[0].Licenses[0]).toEqual("");
+        };
+
+    it("Should parse response successfully", () => {
+        TestHelpers.RequestParseTest($, {
+            "Name": "Relationed Store",
+            "Description": "The Description",
+            "Address": "Sample Data Address",
+            "Location": {
+                "Longitude": 23.54,
+                "Latitude": 35.41
+            }
+        });
+
+        var expectedSuccess = (postStore: Models.Management.Configuration.Store[]) => {
+            expect(postStore[0].Name).toEqual("Relationed Store");
+            expect(postStore[0].Description).toEqual("The Description");
+            expect(postStore[0].Address).toEqual("Sample Data Address");
+            expect(postStore[0].Location.Longitude).toEqual(23.54);
+            expect(postStore[0].Location.Latitude).toEqual(35.41);
+        };
+
+        var testClient = new Xomni.Management.Configuration.Store.StoreClient();
+        testClient.put(expectedSuccess, err => { });
+    });
+});
