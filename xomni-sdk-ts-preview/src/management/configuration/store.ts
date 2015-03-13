@@ -5,6 +5,7 @@ module Xomni.Management.Configuration.Store {
         private fetchingStoreUri: string = "/management/configuration/store/{storeId}";
         private deletingStoreUri: string = "/management/configuration/store/{storeId}";
         private fetchingListUri: string = "/management/configuration/stores?skip={skip}&take={take}";
+        private uri: string = "/management/configuration/store";
 
         get(storeId: number, success: (result: Models.Management.Configuration.Store[]) => void, error: (error: any) => void) {
             this.ValidateParameter(storeId);
@@ -21,6 +22,10 @@ module Xomni.Management.Configuration.Store {
         getList(skip: number, take: number, success: (result: Models.PaginatedContainer<Models.Management.Configuration.Store>) => void, error: (error: any) => void) {
             this.ValidateParameters(skip, take);
             var uri = this.PrepareSecondUri(this.fetchingListUri, skip, take);
+        }
+
+        post(success: (result: PostRequestContainer[]) => void, error: (error: any) => void) {
+            this.httpProvider.post(this.uri, success, error);
         }
 
         private ValidateParameter(storeId: number) {

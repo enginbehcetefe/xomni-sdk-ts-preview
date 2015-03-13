@@ -4,6 +4,7 @@ var validSkip: number = 0;
 var validTake: number = 1000;
 var validUri: string = "/management/configuration/store/" + validStoreId;
 var valilUriForFetchingListStore: string = "/management/configuration/stores?skip=" + validSkip + "&take=" + validTake;
+var validUriForPostAndPut: string = "/management/configuration/store";
 
 describe('StoreClient.get', () => {
 
@@ -189,9 +190,92 @@ describe('StoreClient.getList', () => {
             expect(list.Results[0].Licenses[0].Name).toEqual("Sample Licence");
             expect(list.Results[0].Licenses[0].Password).toEqual("123");
             expect(list.Results[0].Licenses[0].StoreId).toEqual(1004);
+            expect(list.Results[0].Id).toEqual(1011);
+            expect(list.Results[0].Name).toEqual("New Store");
+            expect(list.Results[0].Description).toEqual("Description of New Store");
+            expect(list.Results[0].Address).toEqual("Adres");
+            expect(list.Results[0].Location.Longitude).toEqual(37.65);
+            expect(list.Results[0].Location.Latitude).toEqual(23.41);
         };
 
         var testClient = new Xomni.Management.Configuration.Store.StoreClient();
         testClient.getList(validSkip, validTake, expectedSuccess, err => { });
     });
 });
+
+describe('StoreClient.Post', () => {
+    it("Should hit correct url", () => {
+        TestHelpers.RequestUriTest($, validUriForPostAndPut);
+        var testClient = new Xomni.Management.Configuration.Store.StoreClient();
+        testClient.post(suc => { }, err => { });
+    });
+
+    it("Should use correct http method", () => {
+        TestHelpers.RequestHttpMethodTest($, "Post");
+        var testClient = new Xomni.Management.Configuration.Store.StoreClient();
+        testClient.post(suc => { }, err => { });
+
+    });
+
+    it("Should use correct http headers", () => {
+        TestHelpers.RequestHttpHeadersTest($);
+        var testClient = new Xomni.Management.Configuration.Store.StoreClient();
+        testClient.post(suc => { }, err => { });
+    });
+
+    it("Should parse response successfully", () => {
+        TestHelpers.ResponseParseTest($,
+            [
+                {
+                    "Id": 84,
+                    "Name": "Relationed Store",
+                    "Description": "The Description",
+                    "Address": "Sample Data Address",
+                    "Location": {
+                        "Longitude": 23.54,
+                        "Latitude": 35.41
+                    },
+                    "Licenses": [
+                    ]
+                }
+            ]);
+
+        var expectedSuccess = (post: Models.Management.Configuration.Store[]) => {
+            expect(post.length).toEqual(1);
+            expect(post[0].Id).toEqual(84);
+            expect(post[0].Name).toEqual("Relationed Store");
+            expect(post[0].Description).toEqual("The Description");
+            expect(post[0].Address).toEqual("Sample Data Address");
+            expect(post[0].Location.Longitude).toEqual(23.54);
+            expect(post[0].Location.Latitude).toEqual(35.41);
+            expect(post[0].Licenses[0]).toEqual("");
+        };
+
+        var testClient = new Xomni.Management.Configuration.Store.StoreClient();
+        testClient.post(validStoreId, expectedSuccess, err => { });
+    });
+
+    it("Should parse response successfully", () => {
+        TestHelpers.RequestParseTest($, {
+            "Name": "Relationed Store",
+            "Description": "The Description",
+            "Address": "Sample Data Address",
+            "Location": {
+                "Longitude": 23.54,
+                "Latitude": 35.41
+            }
+        });
+
+        var expectedSuccess = (putStore: Models.Management.Configuration.Store[]) => {
+            expect(putStore[0].Name).toEqual("Relationed Store");
+            expect(putStore[0].Description).toEqual("The Description");
+            expect(putStore[0].Address).toEqual("Sample Data Address");
+            expect(putStore[0].Location.Longitude).toEqual(23.54);
+            expect(putStore[0].Location.Latitude).toEqual(35.41);
+        };
+
+        var testClient = new Xomni.Management.Configuration.Store.StoreClient();
+        testClient.post(validStoreId, expectedSuccess, err => { });
+    });
+});
+

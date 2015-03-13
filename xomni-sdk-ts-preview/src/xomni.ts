@@ -8,6 +8,10 @@
             this.sendHttpRequest(HttpMethod.Delete, uri, success, error);
         }
 
+        post<T>(uri: string, success: (result: T) => void, error: (error: any) => void) {
+            this.sendHttpRequest(HttpMethod.Post, uri, success, error);
+        }
+
         put<T>(uri: string, data: any, success: (result: T) => void, error: (error: any) => void) {
             this.sendHttpRequest(HttpMethod.Put, uri, success, error, data);
         }
