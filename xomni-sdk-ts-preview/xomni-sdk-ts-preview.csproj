@@ -54,7 +54,11 @@
   </PropertyGroup>
   <ItemGroup>
     <TypeScriptCompile Include="definitions\jquery\jquery.d.ts" />
+    <TypeScriptCompile Include="src\management\configuration\store.ts" />
     <TypeScriptCompile Include="src\management\configuration\trending-action-types.ts" />
+    <TypeScriptCompile Include="src\models\management\configuration\licenses.ts" />
+    <TypeScriptCompile Include="src\models\management\configuration\location.ts" />
+    <TypeScriptCompile Include="src\models\management\configuration\store.ts" />
     <TypeScriptCompile Include="src\models\management\configuration\trending-action-type-value.ts">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </TypeScriptCompile>

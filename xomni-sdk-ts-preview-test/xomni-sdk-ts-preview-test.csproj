@@ -60,6 +60,7 @@
     </TypeScriptCompile>
     <TypeScriptCompile Include="definitions\jasmine\jasmine.d.ts" />
     <TypeScriptCompile Include="definitions\jquery\jquery.d.ts" />
+    <TypeScriptCompile Include="fixtures\management\configuration\store-fixture.ts" />
     <TypeScriptCompile Include="fixtures\management\configuration\trending-action-types-fixture.ts" />
     <TypeScriptCompile Include="fixtures\management\social\facebook-fixture.ts" />
     <TypeScriptCompile Include="fixtures\private\analytics\client-counters-fixture.ts" />
